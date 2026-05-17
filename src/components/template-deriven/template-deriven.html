@@ -1,0 +1,63 @@
+<div class="container">
+  <form #kForm="ngForm" (ngSubmit)="onSubmut(kForm)">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        class="form-control"
+        placeholder=""
+        required
+        minlength="3"
+        ngModel
+        #Name="ngModel"
+      />
+      @if (Name.invalid && Name.touched) {
+        @if (Name.errors?.['required']) {
+          <div class="text-danger">Name is required</div>
+        }
+
+        @if (Name.errors?.['minlength']) {
+          <div class="text-danger">Name must be greate than or qeual to 3 charachters</div>
+        }
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        class="form-control"
+        placeholder=""
+        required
+        email
+        ngModel
+        #Email="ngModel"
+      />
+
+      @if (Email.invalid && Email.touched) {
+        @if (Email.errors?.['required']) {
+          <div class="text-danger">Email is required</div>
+        }
+        @if (Email.errors?.['email']) {
+          <div class="text-danger">Invalid Email Format</div>
+        }
+      }
+    </div>
+
+    <button class="btn-primary my-4" [disabled]="!kForm.valid" (click)="createDiv(kForm)">
+      Submit
+    </button>
+  </form>
+
+  @if (isValid) {
+    <div class="alert-success">
+      <div class="text-secondary">{{ data.name }}</div>
+      <div class="text-secondary">{{ data.email }}</div>
+      <!-- <div class="text-secondary">{{Name.value}}</div> -->
+    </div>
+  }
+</div>
