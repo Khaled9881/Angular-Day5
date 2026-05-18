@@ -1,0 +1,82 @@
+<div class="container">
+  <form [formGroup]="Checkout" (ngSubmit)="sub()">
+    <div class="form-group">
+      <label for="FullName">FullName</label>
+      <input type="text" id="FullName" class="form-control" formControlName="FullName" />
+
+      @let FullNameControl = Checkout.get('FullName');
+      @if (FullNameControl?.invalid && FullNameControl?.touched) {
+        <div class="text-danger">Name is Required</div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" class="form-control" formControlName="Email" />
+
+      @let EmailControl = Checkout.get('Email');
+      @if (EmailControl?.invalid && EmailControl?.touched) {
+        @if (EmailControl?.errors?.['required']) {
+          <div class="text-danger">Email is Required</div>
+        }
+
+        @if (EmailControl?.errors?.['email']) {
+          <div class="text-danger">Email format invalid</div>
+        }
+      }
+    </div>
+
+    <div formGroupName="Address">
+      <div class="form-group">
+        <label for="city">City</label>
+        <input type="text" id="city" class="form-control" formControlName="City" />
+
+        @let CityControl = Checkout.get('Address.City');
+        @if (CityControl?.invalid && CityControl?.touched) {
+          @if (CityControl?.errors?.['required']) {
+            <div class="text-danger">City is Required</div>
+          }
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="street">Street</label>
+        <input type="text" id="street" class="form-control" formControlName="Street" />
+
+        @let StreetControl = Checkout.get('Address.Street');
+        @if (StreetControl?.invalid && StreetControl?.touched) {
+          @if (StreetControl?.errors?.['required']) {
+            <div class="text-danger">Strreet is Required</div>
+          }
+        }
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="pm">Payment Method</label>
+      <select id="pm" class="form-control" formControlName="PaymentMethod">
+        <option selected value="Visa">Visa</option>
+        <option value="Master">Master</option>
+        <option value="Fawrys">Fawrys</option>
+      </select>
+
+      @let Pmcontrol = Checkout.get('PaymentMethod');
+
+      @if (Pmcontrol?.invalid && Pmcontrol?.touched) {
+        <div class="alert-danger">Payment REquired</div>
+      }
+    </div>
+
+    <button class="btn btn-primary" [disabled]="Checkout.invalid">Submit</button>
+  </form>
+
+  @if (data) {
+    <div class="alert-success">
+      <div>{{ data.FullName }}</div>
+      <div>{{ data.Email }}</div>
+      <div>{{ data.Address.City }}</div>
+      <div>{{ data.Address.Street }}</div>
+      <div>{{ data.PaymentMethod }}</div>
+    </div>
+  }
+</div>
