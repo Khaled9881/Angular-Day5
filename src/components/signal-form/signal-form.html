@@ -1,0 +1,52 @@
+<div class="container">
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group my-2">
+      <label for="e">Email</label>
+      <input type="email" id="e" [formField]="logForm.Email" />
+      @if (logForm.Email().invalid() && logForm.Email()?.touched()) {
+        <ul>
+          @for (error of logForm.Email().errors(); track $index) {
+            <li>{{ error.message }}</li>
+          }
+        </ul>
+      }
+    </div>
+
+    <div class="form-group my-2">
+      <label for="p">PassWord</label>
+      <input type="text" id="p" [formField]="logForm.Password" />
+      @if (logForm.Password().invalid() && logForm.Password()?.touched()) {
+        <ul>
+          @for (error of logForm.Password().errors(); track $index) {
+            <li>{{ error.message }}</li>
+          }
+        </ul>
+      }
+    </div>
+
+    <div class="form-group my-2">
+      <label for="UserName">UserName</label>
+      <input type="text" id="UserName" [formField]="logForm.UserName" />
+
+      @if (logForm.UserName().invalid() && logForm.UserName()?.touched()) {
+        <ul>
+          @for (error of logForm.UserName().errors(); track $index) {
+            <li>{{ error.message }}</li>
+          }
+        </ul>
+      }
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="logForm().invalid()">Submit</button>
+  </form>
+
+  @if (submited) {
+    <div class="text-bg-success">
+      <ul>
+        <li>{{ data.Email }}</li>
+        <li>{{ data.Password }}</li>
+        <li>{{ data.UserName }}</li>
+      </ul>
+    </div>
+  }
+</div>
